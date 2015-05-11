@@ -12,7 +12,6 @@ class MyHandler(Handler):
         pass
      
     def on_msg(self, msg):
-    	print('sdfsdf')
         print msg
  
 

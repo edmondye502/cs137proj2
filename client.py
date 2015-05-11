@@ -6,7 +6,13 @@ from time import sleep
 
 myname = raw_input('What is your name? ')
 
-prompt = raw_input('1. Q \n2. C \n3. O\n Input: ')
+while (True):
+	prompt = input('1. Q \n2. C \n3. O\n Input: ')
+	if(int(prompt) <= 3 and int(prompt) >= 1):
+		break
+
+
+topic = raw_input('Topic: ')
 
 class Client(Handler):
     
@@ -28,6 +34,9 @@ def periodic_poll():
 thread = Thread(target=periodic_poll)
 thread.daemon = True  # die when the main thread dies 
 thread.start()
+
+
+print('Connecting you with an agent')
 
 while 1:
     mytxt = sys.stdin.readline().rstrip()
