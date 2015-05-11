@@ -12,6 +12,7 @@ class MyHandler(Handler):
         pass
      
     def on_msg(self, msg):
+    	self.do_send(msg)
         print msg
  
 
