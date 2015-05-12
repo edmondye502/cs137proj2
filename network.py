@@ -49,6 +49,7 @@ class Handler(asynchat.async_chat):
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # TCP
             asynchat.async_chat.__init__(self, sock)
             self.connect((host, port))  # asynchronous and non-blocking
+        self._log = []
         self.set_terminator('\0')
         self._buffer = []
         
