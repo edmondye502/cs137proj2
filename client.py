@@ -9,8 +9,10 @@ class Client(Handler):
     
     def on_close(self):
         print("Client now exiting!")
-    
+
+    # upon receiving message
     def on_msg(self, msg):
+        sys.stdout.write("AGENT: ")
         print(msg)
 
 
@@ -20,6 +22,7 @@ def prompt():
         prompt = input('(1) Question \n(2) Complaint \n(3) Other\n Input: ')
         if(int(prompt) <= 3 and int(prompt) >= 1):
             break
+        return int(prompt)
 
 def periodic_poll():
     while 1:
@@ -47,4 +50,5 @@ if __name__ == '__main__':
     while not done:
         mytxt = sys.stdin.readline().rstrip()
         client.do_send({'speak': myname, 'txt': mytxt})
+
     client.do_close() 
