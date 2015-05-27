@@ -109,10 +109,9 @@ class Listener(asyncore.dispatcher):
         if accept_result:  # None if connection blocked or aborted
             sock, (host, port) = accept_result
             h = self.handler_class(host, port, sock)
-            self.on_accept(h)
+            #self.on_accept(h)
             h.on_open()
-        self.close()
-    
+
     # API you can use
     def stop(self):
         self.close()
