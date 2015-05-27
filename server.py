@@ -26,7 +26,7 @@ class MyHandler(Handler):
 			break
 
 		# save log
-		elif(str_msg == ":s"):
+		if(str_msg == ":s"):
 			infile = open("log.txt", "w")
 			strlist_to_str(self._buffer)
 			infile.write()
