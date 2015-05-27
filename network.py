@@ -52,7 +52,7 @@ class Handler(asynchat.async_chat):
         self._log = []
         self.set_terminator('\0')
         self._buffer = []
-        count = 0
+        self.count = 0
 
     def collect_incoming_data(self, data):
         self._buffer.append(data)
@@ -111,6 +111,7 @@ class Listener(asyncore.dispatcher):
             h = self.handler_class(host, port, sock)
             self.on_accept(h)
             h.on_open()
+        self.close()
     
     # API you can use
     def stop(self):
