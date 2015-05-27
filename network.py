@@ -41,7 +41,7 @@ import time
 
 
 class Handler(asynchat.async_chat):
-    
+
     def __init__(self, host, port, sock=None):
         if sock:  # passive side: Handler automatically created by a Listener
             asynchat.async_chat.__init__(self, sock)
@@ -52,7 +52,7 @@ class Handler(asynchat.async_chat):
         self._log = []
         self.set_terminator('\0')
         self._buffer = []
-        
+
     def collect_incoming_data(self, data):
         self._buffer.append(data)
 
