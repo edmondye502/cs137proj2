@@ -2,18 +2,16 @@ from network import Listener, Handler, poll
 
 class MyHandler(Handler):
 
-	count = 0
-
 	def on_open(self):
 		print("Server has opened")
 		self.do_send("Connecting you with an agent...")
-		self.do_send(count)
-		count += 1
+		self.do_send(self.count)
+		self.count += 1
 
 			 
 	def on_close(self):
 		print("Client has disconnected...")
-		count -= 1
+		self.count -= 1
 
 	# when receive message
 	def on_msg(self, msg):
