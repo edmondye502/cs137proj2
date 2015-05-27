@@ -15,8 +15,7 @@ class Client(Handler):
         sys.stdout.write("AGENT: ")
         print(msg)
 
-
-        
+ 
 def prompt():
     while (True):
         prompt = input('(1) Question \n(2) Complaint \n(3) Other\n Input: ')
@@ -38,7 +37,7 @@ if __name__ == '__main__':
     prompt()
     topic = raw_input('Topic: ')
 
-    host, port = 'localhost', 8888
+    host, port = '128.195.6.156', 8888
     client = Client(host, port)
     client.do_send({'join': myname})
 
