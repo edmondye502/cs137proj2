@@ -43,18 +43,11 @@ class MyHandler(Handler):
 			reply = raw_input("Reply: ")
 			self.do_send(reply)
 
-
-
-
-
 def strlist_to_str(l):
 	text = ""
 	for s in l:
 		text += s + "\n"
 	return text
-
-		
- 
 
 if __name__ == '__main__':
 	handlers = {}  # map client handler to user name
