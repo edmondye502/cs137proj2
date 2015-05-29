@@ -42,7 +42,7 @@ import time
 
 class Handler(asynchat.async_chat):
     
-    def __init__(self, host, port, sock=None, count =0):
+    def __init__(self, host, port, sock=None):
         if sock:  # passive side: Handler automatically created by a Listener
             asynchat.async_chat.__init__(self, sock)
         else:  # active side: Handler created manually
@@ -52,7 +52,6 @@ class Handler(asynchat.async_chat):
         self._log = []
         self.set_terminator('\0')
         self._buffer = []
-        self.count = 0
 
     def collect_incoming_data(self, data):
         self._buffer.append(data)
@@ -68,6 +67,7 @@ class Handler(asynchat.async_chat):
 
     def handle_connect(self):  # called on the active side
         self.on_open()
+
         
     # API you can use
     def do_send(self, msg):
@@ -105,12 +105,24 @@ class Listener(asyncore.dispatcher):
         self.listen(5)  # max 5 incoming connections at once (Windows' limit)
 
     def handle_accept(self):  # called on the passive side
-        accept_result = self.accept()
+        if self.handler_class.count == 0:
+            print("if")
+            print(self.handler_class.count)
+            accept_result = self.accept()
+        else:
+            print("else")
+            print(self.handler_class.count)
+            accept_result = None
+
+
         if accept_result:  # None if connection blocked or aborted
             sock, (host, port) = accept_result
             h = self.handler_class(host, port, sock)
-            #self.on_accept(h)
+            self.on_accept(h)
             h.on_open()
+
+    def handle_connect(self):
+        print("closing")
 
     # API you can use
     def stop(self):
@@ -118,8 +130,7 @@ class Listener(asyncore.dispatcher):
 
     # callbacks you override
     def on_accept(self, h):
-        pass
-
+        self.handler_class = h
 
 
 

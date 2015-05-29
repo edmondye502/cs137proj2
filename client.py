@@ -37,11 +37,12 @@ def periodic_poll():
 if __name__ == '__main__':
 
 	host, port = '128.195.6.156', 8888
-	client = Client(host, port)
 	
 	myname = raw_input('What is your name? ')
 	prompt()
 	topic = raw_input('Topic: ')
+	client = Client(host, port)
+
 	client.do_send({'join': myname, 'topic': topic})
 
 	thread = Thread(target=periodic_poll)
