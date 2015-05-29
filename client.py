@@ -13,17 +13,22 @@ class Client(Handler):
 
 	# upon receiving message
 	def on_msg(self, msg):
-		sys.stdout.write("AGENT: ")
-		print(msg)
+		print("Agent: " + msg)
 
 
  
 def prompt():
 	while (True):
 		prompt = input('(1) Question \n(2) Complaint \n(3) Other\n Input: ')
-		if(int(prompt) <= 3 and int(prompt) >= 1):
-			break
-		return int(prompt)
+		if int(prompt) == 1:
+			return 'Question'
+		elif int(prompt) == 2:
+			return 'Complaint'
+		elif int(prompt) == 3:
+			return 'Other'
+		else:
+			print("Please enter a number from 1-3!")
+		
 
 def periodic_poll():
 	while 1:
@@ -39,11 +44,11 @@ if __name__ == '__main__':
 	host, port = '128.195.6.156', 8888
 	
 	myname = raw_input('What is your name? ')
-	prompt()
+	p = prompt()
 	topic = raw_input('Topic: ')
 	client = Client(host, port)
 
-	client.do_send({'join': myname, 'topic': topic})
+	client.do_send({'name': myname, 'prompt': p, 'topic': topic})
 
 	thread = Thread(target=periodic_poll)
 	thread.daemon = True  # die when the main thread dies 
@@ -54,6 +59,6 @@ if __name__ == '__main__':
 		mytxt = sys.stdin.readline().rstrip()
 		if mytxt == ":q":
 			break
-		client.do_send({'speak': myname, 'txt': mytxt})
+		client.do_send({'txt': mytxt})
 
 	client.do_close()

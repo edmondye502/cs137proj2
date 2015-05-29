@@ -2,50 +2,40 @@ from network import Listener, Handler, poll
 
 class MyHandler(Handler):
 
-	count = 0
-
 	def on_open(self):
 		print("Server has opened")
-		self.do_send("Connecting you with an agent...")
-		self.count += 1
+		self.do_send("Connecting you with any Agent. Please wait...")
 
 			 
 	def on_close(self):
 		print("Client has disconnected...")
-		print(self.count)
-		self.count -= 1
-		print("close client")
-		print(self.count)
 
 	# when receive message
 	def on_msg(self, msg):
+
+		if len(msg) == 3:
+
+			print("You are speaking with " + msg.get('name'))
+			print(msg.get('name') + ' chose ' + msg.get('prompt'))
+			print("The topic is: " + msg.get('topic'))
 		
-		for key in msg:
-			k = key
-			# if(k == 'join'):
-			#   return
-			str_msg = msg[key]
-			break
+		elif len(msg) == 1:
 
-		# save log
-		if(str_msg == ":s"):
-			infile = open("log.txt", "w")
-			strlist_to_str(self._buffer)
-			infile.write()
+			# save log
+			if(msg.get('txt') == ":s"):
+				infile = open("log.txt", "w")
+				strlist_to_str(self._buffer)
+				infile.write()
 
-		# easter egg
-		elif(str_msg == ":e"):
-			self.do_send("Happy Easter!")
+			# easter egg
+			elif(msg.get('txt') == ":e"):
+				self.do_send("Happy Easter!")
 
-
-		else:
-			if(k != 'join'):
-				print("Client: " + str_msg)
 			else:
-				print("You are speaking with " + str_msg)
-				print("There topic is: " + msg['topic'])
-			reply = raw_input("Reply: ")
-			self.do_send(reply)
+				print("Client: " + msg.get('txt'))
+
+		reply = raw_input("Reply: ")
+		self.do_send(reply)
 
 def strlist_to_str(l):
 	text = ""

@@ -105,24 +105,18 @@ class Listener(asyncore.dispatcher):
         self.listen(5)  # max 5 incoming connections at once (Windows' limit)
 
     def handle_accept(self):  # called on the passive side
-        if self.handler_class.count == 0:
-            print("if")
-            print(self.handler_class.count)
-            accept_result = self.accept()
-        else:
-            print("else")
-            print(self.handler_class.count)
-            accept_result = None
-
+        
+        accept_result = self.accept()
 
         if accept_result:  # None if connection blocked or aborted
             sock, (host, port) = accept_result
+            print(sock, host, port)
             h = self.handler_class(host, port, sock)
             self.on_accept(h)
             h.on_open()
 
-    def handle_connect(self):
-        print("closing")
+    def handle_write(self):
+        print(self.buffer)
 
     # API you can use
     def stop(self):
@@ -130,8 +124,7 @@ class Listener(asyncore.dispatcher):
 
     # callbacks you override
     def on_accept(self, h):
-        self.handler_class = h
-
+        pass
 
 
     
