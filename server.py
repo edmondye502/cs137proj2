@@ -1,5 +1,5 @@
 from network import Listener, Handler, poll
-
+from easter_egg import*
 handlers = []  # map client handler to user name
 
 class MyHandler(Handler):
@@ -32,7 +32,8 @@ class MyHandler(Handler):
 
 				# easter egg
 				elif(msg.get('txt') == ":e"):
-					self.do_send("Happy Easter!")
+					egg = '\n' + get_easter_egg(EASTER)
+					self.do_send(egg)
 
 				else:
 					print("Client: " + msg.get('txt'))

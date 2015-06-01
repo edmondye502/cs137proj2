@@ -41,7 +41,7 @@ def periodic_poll():
 
 if __name__ == '__main__':
 
-	host, port = '128.195.6.156', 8888
+	host, port = '128.195.6.149', 8888
 	
 	myname = raw_input('What is your name? ')
 	p = prompt()
