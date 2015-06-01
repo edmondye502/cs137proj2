@@ -1,4 +1,4 @@
-from network import Handler, poll
+from network import Handler, poll, get_my_ip
 import sys
 from threading import Thread
 from time import sleep
@@ -6,7 +6,7 @@ from time import sleep
 
 
 class Client(Handler):
-	
+		
 	def on_close(self):
 		print("Client now exiting!")
 		

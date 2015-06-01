@@ -52,6 +52,7 @@ class Handler(asynchat.async_chat):
         self._log = []
         self.set_terminator('\0')
         self._buffer = []
+        self.sock = sock
 
     def collect_incoming_data(self, data):
         self._buffer.append(data)
@@ -96,7 +97,7 @@ class Handler(asynchat.async_chat):
     
     
 class Listener(asyncore.dispatcher):
-    
+
     def __init__(self, port, handler_class):
         asyncore.dispatcher.__init__(self)
         self.handler_class = handler_class
@@ -110,13 +111,9 @@ class Listener(asyncore.dispatcher):
 
         if accept_result:  # None if connection blocked or aborted
             sock, (host, port) = accept_result
-            print(sock, host, port)
             h = self.handler_class(host, port, sock)
             self.on_accept(h)
             h.on_open()
-
-    def handle_write(self):
-        print(self.buffer)
 
     # API you can use
     def stop(self):
@@ -124,10 +121,8 @@ class Listener(asyncore.dispatcher):
 
     # callbacks you override
     def on_accept(self, h):
-        pass
+       pass
 
-
-    
 def poll(timeout=0):
     asyncore.loop(timeout=timeout, count=1)  # return right away
 
